@@ -8,9 +8,6 @@
     <head>
         <meta charset="UTF-8">
             <title>Sign</title>
-            
-        ]
-    
     </head>
  <style>
 body {font-family: Arial, Helvetica, sans-serif;}
@@ -88,18 +85,31 @@ button:hover {
     <body>
         <form action="/postsignup/" method="post" style="border:1px solid #ccc">
             {% csrf_token %}
-            Name:
-            <input type="text" name="name"><br>
-            Email:
-            <input type="email" name="email"><br>
-            Password:
-            <input type="password" name="pass"><br>
-            I'm a(n)
+            
+            <div class="container">
+                <h1>Sign Up</h1>
+                <p>Please Complete the required fields</p>
+                
+            <label for="name"><b>Name</b></label>    
+            <input type="text" placeholder="Donald Trump" name="name"><br>
+                
+            <label for="email"><b>Email</b></label>
+            <input type="email" placeholder="Enter Email" name="email"><br>
+                
+            <label for="pass"><b>password</b></label>
+            <input type="password" placeholder="Enter Password" name="pass"><br>
+                
+            <label for="role"><b>What is your intended role?</b></label>
             <select name="role" size="2">
                 <option value="employer">Employer</option>
                 <option value="student">Student</option>
             </select>
-            <input type="submit" value="SignUp">
+                
+        <div class="clearfix">      
+            <button type="button" class="cancelbtn">Cancel</button>    
+            <button type="submit" class="SignUp">SignUp</button>
+        </div>          
+            </div>
         </form>
     </body>
 </html>
