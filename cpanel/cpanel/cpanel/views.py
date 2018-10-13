@@ -21,7 +21,7 @@ def signIn(request):
 
 def postsign(request):
     email=request.POST.get('email')
-    passw = request.POST.get("pass")
+    passw=request.POST.get("pass")
     try:
         user = authe.sign_in_with_email_and_password(email,passw)
     except:
@@ -37,19 +37,25 @@ def logout(request):
 
 
 def signUp(request):
-    
     return render(request,"signup.html")
+
 def postsignup(request):
     
     name=request.POST.get('name')
     email=request.POST.get('email')
     passw=request.POST.get('pass')
+    role=request.POST.get('role')
+    permission_stu = Permission.objects.create(
+                                              codename='stu_perm',
+                                              name='Can add SL user',
+                                              content_type=ct
+                                              )
     try:
         user=authe.create_user_with_email_and_password(email,passw)
     except:
         message="Unable to create account try again"
         return render(request,"signup.html",{"messg":message})
-        uid = user['localId']
+    uid = user['localId']
     
     data={"name":name,"status":"1"}
 
