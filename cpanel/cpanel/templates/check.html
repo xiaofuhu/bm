@@ -2,13 +2,19 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-            <title>Title</title>
+            <title>Your Jobs</title>
             <style>
                 div{
                     position : absolute;
                     right : 10px;
                     top : 5px
                 }
+                
+                body{background: #1e9600;
+                    background: -webkit-linear-gradient(to left, #1e9600, #fff200, #ff0000);
+                    background:linear-gradient(to left, #1e9600, #fff200, #ff0000);
+                }
+                
             </style>
     </head>
     <body>
@@ -23,7 +29,8 @@
                         <button type="submit" onclick="location.href='/check/?uid={{uid}}'" form="s">Go</button>
                         <button type="button" onclick="location.href='{% url 'log' %}'">Logout</button>
                         </form></div>
-        Welcome {{e}}
+        <h1>Welcome {{e}}!</h1>
+        <h2>Here's a list of your jobs:</h2>
         <br><br>
         {% for time,dat,work in comb_lis %}
         
