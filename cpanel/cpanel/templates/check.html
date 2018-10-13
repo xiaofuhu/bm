@@ -24,17 +24,15 @@
             <form method="get" action="/check" id="s">
                 {% csrf_token %}
                 
-                <input type="text" placeholder="search..." name="search">
-                    <input type="hidden" value="{{uid}}" >
+                <input type="text" placeholder="search..." name="search" value="{{uid}}">
                         <button type="submit" onclick="location.href='/check/?uid={{uid}}'" form="s">Go</button>
                         <button type="button" onclick="location.href='{% url 'log' %}'">Logout</button>
                         </form></div>
         <h1>Welcome {{e}}!</h1>
         <h2>Here's a list of your jobs:</h2>
         <br><br>
-        {% for time,dat,work in comb_lis %}
-        
-        Date: {{dat}} &nbsp;Work: <a href="/post_check/?z={{time}}"  >{{work}}</a>
+        {% for wor in comb_lis %}
+        <a>Job Name: {{wor}}</a>
         <br>
         
         {% endfor %}

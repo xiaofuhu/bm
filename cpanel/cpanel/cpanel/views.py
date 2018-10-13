@@ -90,77 +90,27 @@ def post_create(request):
     return render(request,'welcome.html', {'e':name})
 
 def check(request):
-    
-    if request.method == 'GET' and 'csrfmiddlewaretoken' in request.GET:
-        search = request.GET.get('search')
-        search = search.lower()
-        uid = request.GET.get('uid')
-        print(search)
-        print(uid)
-        timestamps = database.child('users').child(uid).child('reports').shallow().get().val()
-        work_id=[]
-        for i in timestamps or []:
-            wor = database.child('users').child(uid).child('reports').child(i).child('work').get().val()
-            wor = str(wor)+"$"+str(i)
-            work_id.append(wor)
-        matching = [str(string) for string in work_id if search in string.lower()]
-        
-        s_work=[]
-        s_id=[]
-        
-        for i in matching:
-            work,ids=i.split('$')
-            s_work.append(work)
-            s_id.append(ids)
-        print(s_work)
-        print(s_id)
-        date = []
-        import datetime
-        for i in s_id:
-            i = float(i)
-            dat = datetime.datetime.fromtimestamp(i).strftime('%H:%M %d-%m-%Y')
-            date.append(dat)
-        comb_lis = zip(s_id, date, s_work)
-        name = database.child('users').child(uid).child('details').child('name').get().val()
 
-        return render(request, 'check.html', {'comb_lis': comb_lis, 'e': name, 'uid': uid})
+    array_of_user_ids = database.child('users').shallow().get().val()
+    work_id=[]
+    work_name=[]
+    for uid in array_of_user_ids or []:
+        try:
+            wor = database.child('users').child(uid).child('reports').shallow().get().val()
+            work_id.extend(wor)
+        except:
+            pass
+        for wid in wor or []:
+            try:
+                wor_n = database.child('users').child(uid).child('reports').child(wid).child('work').get().val()
+                work_name.append(wor_n)
+            except:
+                pass
 
-    else:
-        import datetime
-        idtoken = request.session['uid']
-        a = authe.get_account_info(idtoken)
-        a = a['users']
-        a = a[0]
-        a = a['localId']
-        
-        timestamps = database.child('users').child(a).child('reports').shallow().get().val()
-        lis_time=[]
-        for i in timestamps or []:
-            
-            lis_time.append(i)
-    
-        lis_time.sort(reverse=True)
-        
-        print(lis_time)
-        work = []
-        
-        for i in lis_time:
-            wor=database.child('users').child(a).child('reports').child(i).child('work').get().val()
-            work.append(wor)
-        print(work)
-        
-        date=[]
-        for i in lis_time:
-            i = float(i)
-            dat = datetime.datetime.fromtimestamp(i).strftime('%H:%M %d-%m-%Y')
-            date.append(dat)
+    comb_lis = work_name
 
-    print(date)
-
-    comb_lis = zip(lis_time,date,work)
-    name = database.child('users').child(a).child('details').child('name').get().val()
-
-    return render(request,'check.html',{'comb_lis':comb_lis,'e':name,'uid':a})
+    name = database.child('users').child(uid).child('details').child('name').get().val()
+    return render(request, 'check.html', {'comb_lis': comb_lis, 'e': name})
 
 def post_check(request):
     
@@ -176,7 +126,6 @@ def post_check(request):
     
     work =database.child('users').child(a).child('reports').child(time).child('work').get().val()
     progress =database.child('users').child(a).child('reports').child(time).child('progress').get().val()
-    print(img_url)
     i = float(time)
     dat = datetime.datetime.fromtimestamp(i).strftime('%H:%M %d-%m-%Y')
     name = database.child('users').child(a).child('details').child('name').get().val()
