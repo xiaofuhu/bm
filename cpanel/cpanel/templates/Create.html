@@ -9,6 +9,9 @@
                     right : 10px;
                     top : 5px
                 }
+            body {background: #fdc830; /* fallback for old browsers */
+            background: -webkit-linear-gradient(to right, #fdc830, #f37335); /* Chrome 10-25, Safari 5.1-6 */
+                background: linear-gradient(to right, #fdc830, #f37335); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */}
             </style>
     </head>
     <body>
@@ -22,46 +25,11 @@
             Work Assigned :
             <input type="text" name="work" required><br><br>
                 Progress:
-                <textarea rows="5" cols="40" name="progress" required></textarea>
-                <br><br>
-                Document Uplaod:
-                <input type="file" name="files[]" id="files" required>
-                    <input type="hidden" name="url" id="url">
-                        <button type="button" onclick="uploadimage()">Upload</button><br><br>
-                        <input type="submit" value="Submit">
+                <textarea rows="5" cols="40" name="progress" required></textarea><br><br>
+                <input type="submit" value="Submit">
                             
                             
                             
         </form>
     </body>
-    <script src="https://www.gstatic.com/firebasejs/3.7.4/firebase.js"></script>
-    <script>
-        var config = {
-            apiKey: "AIzaSyB0Il0NLQPxxDyMgoE0fOMd4pYUkbkZVvI",
-            authDomain: "cpanel-5e873.firebaseapp.com",
-            databaseURL: "https://cpanel-5e873.firebaseio.com",
-            storageBucket: "cpanel-5e873.appspot.com",
-            messagingSenderId: "579985583952"
-        };
-    firebase.initializeApp(config);
-    // Get a reference to the storage service, which is used to create references in your storage bucket
-    function uploadimage(){
-        var storage = firebase.storage();
-        var file = document.getElementById("files").files[0];
-        var storageRef = storage.ref();
-        var thisref = storageRef.child(file.name).put(file);
-        thisref.on('state_changed',function(snapshot){
-                   console.log("file uplaoded succesfully");
-                   },
-                   function(error) {
-                   },
-                   function() {
-                   // Upload completed successfully, now we can get the download URL
-                   var downloadURL = thisref.snapshot.downloadURL;
-                   console.log("got url");
-                   document.getElementById("url").value = downloadURL;
-                   alert("file uploaded successfully");
-                   });
-    }
-    </script>
 </html>

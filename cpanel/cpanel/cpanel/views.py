@@ -21,7 +21,7 @@ def signIn(request):
 
 def postsign(request):
     email=request.POST.get('email')
-    passw=request.POST.get("pass")
+    passw=request.POST.get('pass')
     try:
         user = authe.sign_in_with_email_and_password(email,passw)
     except:
@@ -40,24 +40,18 @@ def signUp(request):
     return render(request,"signup.html")
 
 def postsignup(request):
-    
     name=request.POST.get('name')
     email=request.POST.get('email')
     passw=request.POST.get('pass')
     role=request.POST.get('role')
-    permission_stu = Permission.objects.create(
-                                              codename='stu_perm',
-                                              name='Can add SL user',
-                                              content_type=ct
-                                              )
     try:
         user=authe.create_user_with_email_and_password(email,passw)
     except:
         message="Unable to create account try again"
         return render(request,"signup.html",{"messg":message})
+
     uid = user['localId']
-    
-    data={"name":name,"status":"1"}
+    data={"name":name,"role":role, "status":"1"}
 
     database.child("users").child(uid).child("details").set(data)
     return render(request,"signIn.html")
@@ -105,7 +99,7 @@ def check(request):
         print(uid)
         timestamps = database.child('users').child(uid).child('reports').shallow().get().val()
         work_id=[]
-        for i in timestamps:
+        for i in timestamps or []:
             wor = database.child('users').child(uid).child('reports').child(i).child('work').get().val()
             wor = str(wor)+"$"+str(i)
             work_id.append(wor)
@@ -182,10 +176,9 @@ def post_check(request):
     
     work =database.child('users').child(a).child('reports').child(time).child('work').get().val()
     progress =database.child('users').child(a).child('reports').child(time).child('progress').get().val()
-    img_url = database.child('users').child(a).child('reports').child(time).child('url').get().val()
     print(img_url)
     i = float(time)
     dat = datetime.datetime.fromtimestamp(i).strftime('%H:%M %d-%m-%Y')
     name = database.child('users').child(a).child('details').child('name').get().val()
     
-    return render(request,'post_check.html',{'w':work,'p':progress,'d':dat,'e':name,'i':img_url})
+    return render(request,'post_check.html',{'w':work,'p':progress,'d':dat,'e':name})
