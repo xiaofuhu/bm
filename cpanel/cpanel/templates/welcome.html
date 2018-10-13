@@ -9,6 +9,18 @@
                     right : 10px;
                     top : 5px
                 }
+
+                body{background: #ff416c;
+                    background: -webkit-linear-gradient(to left, #ff416c, #ff4b2b);
+                    background:linear-gradient(to left, #ff416c, #ff4b2b);
+                }
+                
+                h1{color: #FFFFFF;
+                }
+                
+                h2{color:#FFFFFF;
+                }
+                
             </style>
     </head>
     <body>
@@ -18,9 +30,10 @@
             
             <button type="button" onclick="location.href='{% url 'log' %}'">Logout</button>
         </div>
-        Welcome {{e}}
+        <h1>Welcome {{e}}!</h1>
+        <h2>You can create a job or check the status of an already created job.
         <br><br>
-        <button type="button" onclick="location.href='{% url 'create' %}'">Create Report</button>
-        <button type="button" onclick="location.href='{% url 'check' %}'">Check Report</button>
+        <button type="button" onclick="location.href='{% url 'create' %}'">Create Job</button>
+        <button type="button" onclick="location.href='{% url 'check' %}'">Check Job</button>
     </body>
 </html>
