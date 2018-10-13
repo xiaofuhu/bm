@@ -7,7 +7,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-            <title>Sign</title>
+            <title>Sign Up</title>
         <style>
             body{background: #fdc830;
                 background: -webkit-linear-gradient(to right, #009fff, #ec2f4b);
@@ -118,7 +118,7 @@ button:hover {
                 
         <div class="clearfix">      
             <button type="submit" class="signupbtn">SignUp</button>
-            <button type="button" class="cancelbtn">Cancel</button>
+            <button type="button" class="cancelbtn" onclick="location.href='{% url 'login' %}'">Cancel</button>
         </div>          
             </div>
         </form>
