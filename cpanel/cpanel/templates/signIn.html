@@ -8,9 +8,15 @@
     <head>
         <meta charset="UTF-8">
             <title>Sign</title>
-            
+        <style>
+            body {background: #fdc830;
+                background: -webkit-linear-gradient(to right, #fdc830, #f37335);
+                background:linear-gradient(to right, #fdc830, #f37335);}
+        </style>  
     </head>
     <body>
+        <h1>Welcome to BookMe!</h1>
+        <h2>Login to get started!</h2>
         <form action="/postsign/" method="post">
             {% csrf_token %}
             Email :
@@ -20,5 +26,6 @@
                     <input type="submit" value="SignIn">
                         <button type="button" onclick="location.href='{% url 'signup' %}'">SignUp</button>
         </form>
+        <p> BookMe is an interactive platform where employers can hire students for a quick job right away! </p>
     </body>
 </html>
