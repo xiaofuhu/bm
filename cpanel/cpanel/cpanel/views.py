@@ -118,7 +118,7 @@ def check(request):
                 work_location.append(wor_l)
                 work_wage.append(wor_w)
                 work_skill_req.append(wor_s)
-                work_contact.append(wor_w)
+                work_contact.append(wor_c)
             except:
                 pass
 

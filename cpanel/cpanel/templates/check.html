@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
             <title>Your Jobs</title>
             <style>
                 div{
@@ -9,33 +9,97 @@
                     right : 10px;
                     top : 5px
                 }
-                
-                body{background: #1e9600;
-                    background: -webkit-linear-gradient(to left, #1e9600, #fff200, #ff0000);
-                    background:linear-gradient(to left, #1e9600, #fff200, #ff0000);
+            
+            body{background: #1e9600;
+                background: -webkit-linear-gradient(to left, #1e9600, #fff200, #ff0000);
+                background:linear-gradient(to left, #1e9600, #fff200, #ff0000);
+            }
+                * {
+                    box-sizing: border-box;
                 }
-                
+            
+            #myInput {
+                background-image: url('/css/searchicon.png');
+                background-position: 10px 12px;
+                background-repeat: no-repeat;
+                width: 100%;
+                font-size: 16px;
+                padding: 12px 20px 12px 40px;
+                border: 1px solid #ddd;
+                margin-bottom: 12px;
+            }
+            
+            #myUL {
+                list-style-type: none;
+                padding: 0;
+                margin: 0;
+            }
+            
+            #myUL li a {
+                border: 1px solid #ddd;
+                margin-top: -1px; /* Prevent double borders */
+                background-color: #f6f6f6;
+                padding: 12px;
+                text-decoration: none;
+                font-size: 16px;
+                width: 100%;
+                color: black;
+                display: block
+            }
+            
+            #myUL li a:hover:not(.header) {
+                background-color: #eee;
+            }
             </style>
     </head>
+    
+    
     <body>
         
         <div>
             <form method="get" action="/check" id="s">
                 {% csrf_token %}
-                
-                <input type="text" placeholder="search..." name="search" value="{{uid}}">
-                        <button type="submit" onclick="location.href='/check/?uid={{uid}}'" form="s">Go</button>
-                        <button type="button" onclick="history.back()">Dashboard</button>
-                        <button type="button" onclick="location.href='{% url 'log' %}'">Logout</button>
+                <button type="button" onclick="history.back()">Dashboard</button>
+                <button type="button" onclick="location.href='{% url 'log' %}'">Logout</button>
             </form></div>
         <h1>Welcome {{e}}!</h1>
         <h2>Here's a list of your jobs:</h2>
         <br><br>
-        {% for wor_n,wor_l,wor_w,wor_s,wor_c in comb_lis %}
-        <a>Job Name: {{wor_n}} Location: {{wor_l}} Wage: {{wor_w}} Skills Required: {{wor_s}} Contact: {{wor_c}}</a>
-        <br>
         
-        {% endfor %}
+
+        
+        
+        <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
+            
+            <ul id="myUL">
+                {% for wor_n,wor_l,wor_w,wor_s,wor_c in comb_lis %}
+                <li><a>Job Name: {{wor_n}} Location: {{wor_l}} Wage: {{wor_w}} Skills Required: {{wor_s}} Contact: {{wor_c}}</a></li>
+                {% endfor %}
+            </ul>
+            
+            <script>
+                function myFunction() {
+                    var input, filter, ul, li, a, i;
+                    input = document.getElementById("myInput");
+                    filter = input.value.toUpperCase();
+                    ul = document.getElementById("myUL");
+                    li = ul.getElementsByTagName("li");
+                    for (i = 0; i < li.length; i++) {
+                        a = li[i].getElementsByTagName("a")[0];
+                        if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                            li[i].style.display = "";
+                        } else {
+                            li[i].style.display = "none";
+                        }
+                    }
+                }
+            </script>
+        
+        
+
+        
+        
+
         
     </body>
 </html>
