@@ -72,7 +72,6 @@ def post_create(request):
     millis = int(time.mktime(time_now.timetuple()))
     print("mili"+str(millis))
     work = request.POST.get('work')
-    progress =request.POST.get('progress')
     location =request.POST.get('location')
     wage =request.POST.get('wage')
     skill_req =request.POST.get('skill_req')
@@ -85,7 +84,6 @@ def post_create(request):
     print("info"+str(a))
     data = {
         'work':work,
-        'progress':progress,
         'location':location,
         'wage':wage,
         'skill_req':skill_req,
@@ -99,7 +97,6 @@ def check(request):
     array_of_user_ids = database.child('users').shallow().get().val()
     work_id=[]
     work_name=[]
-    work_progress=[]
     work_location=[]
     work_wage=[]
     work_skill_req=[]
@@ -112,19 +109,17 @@ def check(request):
         for wid in wor or []:
             try:
                 wor_n = database.child('users').child(uid).child('reports').child(wid).child('work').get().val()
-                wor_p = database.child('users').child(uid).child('reports').child(wid).child('progress').get().val()
                 wor_l = database.child('users').child(uid).child('reports').child(wid).child('location').get().val()
                 wor_w = database.child('users').child(uid).child('reports').child(wid).child('wage').get().val()
                 wor_s = database.child('users').child(uid).child('reports').child(wid).child('skill_req').get().val()
                 work_name.append(wor_n)
-                work_progress.append(wor_p)
                 work_location.append(wor_l)
                 work_wage.append(wor_w)
                 work_skill_req.append(wor_s)
             except:
                 pass
 
-    comb_lis = {work_name,work_progress,work_location,work_wage,work_skill_req}
+    comb_lis = {work_name,work_location,work_wage,work_skill_req}
 
     name = database.child('users').child(uid).child('details').child('name').get().val()
     return render(request, 'check.html', {'comb_lis': comb_lis, 'e': name})
@@ -142,7 +137,6 @@ def post_check(request):
     a = a['localId']
     
     work =database.child('users').child(a).child('reports').child(time).child('work').get().val()
-    progress =database.child('users').child(a).child('reports').child(time).child('progress').get().val()
     location =database.child('users').child(a).child('reports').child(time).child('location').get().val()
     wage =database.child('users').child(a).child('reports').child(time).child('wage').get().val()
     skill_req =database.child('users').child(a).child('reports').child(time).child('skill_req').get().val()
@@ -150,4 +144,4 @@ def post_check(request):
     dat = datetime.datetime.fromtimestamp(i).strftime('%H:%M %d-%m-%Y')
     name = database.child('users').child(a).child('details').child('name').get().val()
     
-    return render(request,'post_check.html',{'w':work,'p':progress,'l':location,'w':wage,'s':skill_req,'d':dat,'e':name})
+    return render(request,'post_check.html',{'w':work,'l':location,'w':wage,'s':skill_req,'d':dat,'e':name})
