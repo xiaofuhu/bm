@@ -94,7 +94,7 @@ button:hover {
     
     
     <body>
-        <form action="/postsignup/" method="post" style="border:1px solid #ccc">
+        <form action="/postsignup/" method="post" style="border:1px solid #ccc" onsubmit="return domainLim()">
             {% csrf_token %}
             
             <div class="container">
@@ -105,16 +105,9 @@ button:hover {
             <input type="text" placeholder="Donald Trump" name="name"><br>
                 
             <label for="email"><b>Email</b></label>
-            <input type="text" placeholder="Enter Email" name="email"><br>
-                
+            <input type="text" placeholder="Enter Email" name="email" id="emailin"><br>
             <label for="pass"><b>Password</b></label>
             <input type="password" placeholder="Enter Password" name="pass"><br>
-                
-            <label for="role"><b>What is your intended role?</b></label>
-            <select name="role" size="2">
-                <option value="employer">Employer</option>
-                <option value="student">Student</option>
-            </select>
                 
         <div class="clearfix">      
             <button type="submit" class="signupbtn">SignUp</button>
@@ -123,4 +116,16 @@ button:hover {
             </div>
         </form>
     </body>
+    <script>
+        function domainLim() {
+            input = document.getElementById("emailin").value;
+            input = input.split("@").slice(1);
+            allowed = 'umich.edu';
+            if (input[0] != allowed) {
+                alert("Please use your umich.edu email");
+                return false;
+            }
+            return true;
+        }
+    </script>
 </html>

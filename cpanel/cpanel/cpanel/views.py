@@ -44,7 +44,6 @@ def postsignup(request):
     name=request.POST.get('name')
     email=request.POST.get('email')
     passw=request.POST.get('pass')
-    role=request.POST.get('role')
     try:
         user=authe.create_user_with_email_and_password(email,passw)
     except:
@@ -52,7 +51,7 @@ def postsignup(request):
         return render(request,"signup.html",{"messg":message})
 
     uid = user['localId']
-    data={"name":name,"role":role, "status":"1"}
+    data={"name":name, "status":"1"}
 
     database.child("users").child(uid).child("details").set(data)
     return render(request,"signIn.html")

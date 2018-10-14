@@ -12,72 +12,103 @@
             body {background: #fdc830;
                 background: -webkit-linear-gradient(to right, #fdc830, #f37335);
                 background:linear-gradient(to right, #fdc830, #f37335);
+            }
                 
                 .ball {
                     position: absolute;
                     border-radius: 100%;
                     opacity: 0.7;
                 }
-            }
-        </style>  
+        </style>
+        <script   src="https://code.jquery.com/jquery-3.3.1.min.js"   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="   crossorigin="anonymous"></script>
     </head>
+    <style>
+        
+        body {font-family: Arial, Helvetica, sans-serif;}
+        * {box-sizing: border-box}
+        
+        /* Full-width input fields */
+        input[type=text], input[type=password] {
+            width: 100%;
+            padding: 15px;
+            margin: 5px 0 22px 0;
+            display: inline-block;
+            border: none;
+            background: #FFFFFF;
+        }
+    
+    input[type=text]:focus, input[type=password]:focus {
+        background-color: #FFFFFF;
+        outline: none;
+    }
+    
+    input[type=text]:focus, input[type=email]:focus {
+        background-color: #FFFFFF;
+        outline: none;
+    }
+    
+    hr {
+        border: 1px solid #ADD8e6;
+        margin-bottom: 25px;
+        </style>
     <body>
         <h1>Welcome to BookMe!</h1>
         <h2>Login to get started!</h2>
         <form action="/postsign/" method="post">
             {% csrf_token %}
-            Email :
-            <input type="email" name="email"><br><br>
-                Password:
+            <b>Email :</b>
+            <input type="text" name="email" placeholder="example@umich.edu"><br><br>
+                <b>Password:</b>
                 <input type="password" name="pass"><br><br>
                     <input type="submit" value="SignIn">
                         <button type="button" onclick="location.href='{% url 'signup' %}'">SignUp</button>
         </form>
         <p> BookMe is an interactive platform where employers can hire students for a quick job right away! </p>
         
-        <script type="text/javascript"> // Some random colors
-            const colors = ["#3CC157", "#2AA7FF", "#1B1B1B", "#FCBC0F", "#F85F36"];
-            
-            const numBalls = 50;
-            const balls = [];
-            
-            for (let i = 0; i < numBalls; i++) {
-                let ball = document.createElement("div");
-                ball.classList.add("ball");
-                ball.style.background = colors[Math.floor(Math.random() * colors.length)];
-                ball.style.left = `${Math.floor(Math.random() * 100)}vw`;
-                ball.style.top = `${Math.floor(Math.random() * 100)}vh`;
-                ball.style.transform = `scale(${Math.random()})`;
-                ball.style.width = `${Math.random()}em`;
-                ball.style.height = ball.style.width;
-                
-                balls.push(ball);
-                document.body.append(ball);
-            }
-        
-        // Keyframes
-        balls.forEach((el, i, ra) => {
-                      let to = {
-                      x: Math.random() * (i % 2 === 0 ? -11 : 11),
-                      y: Math.random() * 12
-                      };
-                      
-                      let anim = el.animate(
-                                            [
-                                             { transform: "translate(0, 0)" },
-                                             { transform: `translate(${to.x}rem, ${to.y}rem)` }
-                                             ],
-                                            {
-                                            duration: (Math.random() + 1) * 2000, // random duration
-                                            direction: "alternate",
-                                            fill: "both",
-                                            iterations: Infinity,
-                                            easing: "ease-in-out"
-                                            }
-                                            );
-                      });
-            </script>
+
 
         
     </body>
+    <script type="text/javascript"> // Some random colors
+        const colors = ["#3CC157", "#2AA7FF", "#1B1B1B", "#FCBC0F", "#F85F36"];
+        
+        const numBalls = 50;
+        const balls = [];
+        
+        for (let i = 0; i < numBalls; i++) {
+            let ball = document.createElement("div");
+            ball.classList.add("ball");
+            ball.style.background = colors[Math.floor(Math.random() * colors.length)];
+            ball.style.left = `${Math.floor(Math.random() * 100)}vw`;
+            ball.style.top = `${Math.floor(Math.random() * 100)}vh`;
+            ball.style.transform = `scale(${Math.random()})`;
+            ball.style.width = `${Math.random()}em`;
+            ball.style.height = ball.style.width;
+            
+            balls.push(ball);
+            document.body.append(ball);
+        }
+    
+    // Keyframes
+    balls.forEach((el, i, ra) => {
+                  let to = {
+                  x: Math.random() * (i % 2 === 0 ? -11 : 11),
+                  y: Math.random() * 12
+                  };
+                  
+                  let anim = el.animate(
+                                        [
+                                         { transform: "translate(0, 0)" },
+                                         { transform: `translate(${to.x}rem, ${to.y}rem)` }
+                                         ],
+                                        {
+                                        duration: (Math.random() + 1) * 2000, // random duration
+                                        direction: "alternate",
+                                        fill: "both",
+                                        iterations: Infinity,
+                                        easing: "ease-in-out"
+                                        }
+                                        );
+                  });
+        </script>
 </html>
