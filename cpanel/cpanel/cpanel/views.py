@@ -99,10 +99,10 @@ def check(request):
     array_of_user_ids = database.child('users').shallow().get().val()
     work_id=[]
     work_name=[]
-    work_progress[]
-    work_location[]
-    work_wage[]
-    work_skill_req[]
+    work_progress=[]
+    work_location=[]
+    work_wage=[]
+    work_skill_req=[]
     for uid in array_of_user_ids or []:
         try:
             wor = database.child('users').child(uid).child('reports').shallow().get().val()
