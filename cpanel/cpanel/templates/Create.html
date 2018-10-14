@@ -4,7 +4,11 @@
         <meta charset="UTF-8">
             <title>Create a Job</title>
             <style>
-                
+                div1{
+                    position : absolute;
+                    right : 10px;
+                    top : 5px
+                }
                 body{
                 
 background: #fdc830; /* fallback for old browsers */
@@ -34,8 +38,16 @@ input[type=text]:focus, input[type=password]:focus {
      
             </style>
     <body>
-        <form action="/post_create/" method="post" style="border:1px solid #ccc">   
+        <div1>
+        <form action="/post_create/" method="post" style="border:1px solid #ccc">
+<!--            {% csrf_token %}-->
+            <button type="button" onclick="history.back()" form="s">Dashboard</button>
+            <button type="button" onclick="location.href='{% url 'log' %}'">Logout</button>
+        </form>
+        </div1>
         <H1>Create A Job</H1>
+        <form action="/post_create/" method="post">
+            {% csrf_token %}
             <div class="container">
                 
             <label for="work"><b>Job</b></label>
@@ -48,15 +60,14 @@ input[type=text]:focus, input[type=password]:focus {
            <input type="text" name="wage"><br>
             
             <label for="skill_req"><b>Skills Required</b></label> 
-            <input type="text" name="skills"><br>   
+            <input type="text" name="skill_req"><br>
                 
-            <div>
-            <button type="button" onclick="history.back()">History</button>
-            <button type="button" onclick="location.href='{% url 'log' %}'">Submit</button>
-</div>    
-                
+            <label for="contact"><b>Contact Info</b></label>
+            <input type="text" name="contact"><br>
+
+            <input type="submit" value="Submit">
                             
-            </div clearfix>                 
+            </div clearfix>
         </form>
     </body>
     <script src="https://www.gstatic.com/firebasejs/3.7.4/firebase.js"></script>

@@ -19,7 +19,6 @@
     </head>
     <body>
         
-        
         <div>
             <form method="get" action="/check" id="s">
                 {% csrf_token %}
@@ -32,8 +31,8 @@
         <h1>Welcome {{e}}!</h1>
         <h2>Here's a list of your jobs:</h2>
         <br><br>
-        {% for wor in comb_lis %}
-        <a>Job Name: {{wor}}</a>
+        {% for wor_n,wor_l,wor_w,wor_s,wor_c in comb_lis %}
+        <a>Job Name: {{wor_n}} Location: {{wor_l}} Wage: {{wor_w}} Skills Required: {{wor_s}} Contact: {{wor_c}}</a>
         <br>
         
         {% endfor %}
