@@ -1,10 +1,11 @@
 from django.shortcuts import render
 import pyrebase
 from django.contrib import auth
+from django.urls import reverse
 
 config = {
 
-"apiKey": "AIzaSyCWhd3THR7JiuUctpYNLA_7kR24pMhfrp0",
+    "apiKey": "AIzaSyCWhd3THR7JiuUctpYNLA_7kR24pMhfrp0",
     "authDomain": "bmdata-111111.firebaseapp.com",
     "databaseURL": "https://bmdata-111111.firebaseio.com",
     "projectId": "bmdata-111111",
@@ -31,10 +32,10 @@ def postsign(request):
     session_id=user['idToken']
     request.session['uid']=str(session_id)
     return render(request, "welcome.html",{"e":email})
+
 def logout(request):
     auth.logout(request)
     return render(request,'signIn.html')
-
 
 def signUp(request):
     return render(request,"signup.html")
@@ -66,13 +67,15 @@ def post_create(request):
     import time
     from datetime import datetime, timezone
     import pytz
-    
-    tz= pytz.timezone('Asia/Kolkata')
+    tz= pytz.timezone('US/Michigan')
     time_now= datetime.now(timezone.utc).astimezone(tz)
     millis = int(time.mktime(time_now.timetuple()))
     print("mili"+str(millis))
     work = request.POST.get('work')
     progress =request.POST.get('progress')
+    location =request.POST.get('location')
+    wage =request.POST.get('wage')
+    skill_req =request.POST.get('skill_req')
     url = request.POST.get('url')
     idtoken= request.session['uid']
     a = authe.get_account_info(idtoken)
@@ -81,9 +84,11 @@ def post_create(request):
     a = a['localId']
     print("info"+str(a))
     data = {
-        "work":work,
+        'work':work,
         'progress':progress,
-        'url':url
+        'location':location,
+        'wage':wage,
+        'skill_req':skill_req,
     }
     database.child('users').child(a).child('reports').child(millis).set(data)
     name = database.child('users').child(a).child('details').child('name').get().val()
@@ -94,6 +99,10 @@ def check(request):
     array_of_user_ids = database.child('users').shallow().get().val()
     work_id=[]
     work_name=[]
+    work_progress[]
+    work_location[]
+    work_wage[]
+    work_skill_req[]
     for uid in array_of_user_ids or []:
         try:
             wor = database.child('users').child(uid).child('reports').shallow().get().val()
@@ -103,11 +112,19 @@ def check(request):
         for wid in wor or []:
             try:
                 wor_n = database.child('users').child(uid).child('reports').child(wid).child('work').get().val()
+                wor_p = database.child('users').child(uid).child('reports').child(wid).child('progress').get().val()
+                wor_l = database.child('users').child(uid).child('reports').child(wid).child('location').get().val()
+                wor_w = database.child('users').child(uid).child('reports').child(wid).child('wage').get().val()
+                wor_s = database.child('users').child(uid).child('reports').child(wid).child('skill_req').get().val()
                 work_name.append(wor_n)
+                work_progress.append(wor_p)
+                work_location.append(wor_l)
+                work_wage.append(wor_w)
+                work_skill_req.append(wor_s)
             except:
                 pass
 
-    comb_lis = work_name
+    comb_lis = {work_name,work_progress,work_location,work_wage,work_skill_req}
 
     name = database.child('users').child(uid).child('details').child('name').get().val()
     return render(request, 'check.html', {'comb_lis': comb_lis, 'e': name})
@@ -126,8 +143,11 @@ def post_check(request):
     
     work =database.child('users').child(a).child('reports').child(time).child('work').get().val()
     progress =database.child('users').child(a).child('reports').child(time).child('progress').get().val()
+    location =database.child('users').child(a).child('reports').child(time).child('location').get().val()
+    wage =database.child('users').child(a).child('reports').child(time).child('wage').get().val()
+    skill_req =database.child('users').child(a).child('reports').child(time).child('skill_req').get().val()
     i = float(time)
     dat = datetime.datetime.fromtimestamp(i).strftime('%H:%M %d-%m-%Y')
     name = database.child('users').child(a).child('details').child('name').get().val()
     
-    return render(request,'post_check.html',{'w':work,'p':progress,'d':dat,'e':name})
+    return render(request,'post_check.html',{'w':work,'p':progress,'l':location,'w':wage,'s':skill_req,'d':dat,'e':name})

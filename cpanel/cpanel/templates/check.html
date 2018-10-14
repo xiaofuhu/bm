@@ -26,8 +26,9 @@
                 
                 <input type="text" placeholder="search..." name="search" value="{{uid}}">
                         <button type="submit" onclick="location.href='/check/?uid={{uid}}'" form="s">Go</button>
+                        <button type="button" onclick="history.back()">Dashboard</button>
                         <button type="button" onclick="location.href='{% url 'log' %}'">Logout</button>
-                        </form></div>
+            </form></div>
         <h1>Welcome {{e}}!</h1>
         <h2>Here's a list of your jobs:</h2>
         <br><br>

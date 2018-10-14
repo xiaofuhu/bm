@@ -21,8 +21,8 @@ from . import views
 urlpatterns = [
                url(r'^admin/', admin.site.urls),
                url(r'^$',views.signIn,name='login'),
-               url(r'^postsign/',views.postsign),
-               url(r'^logout/',views.logout,name="log"),
+               url(r'^postsign/',views.postsign, name='postsign'),
+               url(r'^logout/',views.logout,name='log'),
                url(r'^signup/',views.signUp,name='signup'),
                url(r'^postsignup/',views.postsignup,name='postsignup'),
                url(r'^create/',views.create,name='create'),
